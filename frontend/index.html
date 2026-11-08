@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14532d" />
+    <title>Hifz Tracker</title>
+    <script>
+      // Apply theme and language before first paint to avoid a flash.
+      ;(function () {
+        try {
+          var theme = localStorage.getItem('theme')
+          var dark = theme ? theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
+          if (dark) document.documentElement.classList.add('dark')
+          var lang = localStorage.getItem('lang') === 'ar' ? 'ar' : 'en'
+          document.documentElement.lang = lang
+          document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
