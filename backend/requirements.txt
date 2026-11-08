@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+libsql-client
+python-jose[cryptography]
+passlib[argon2]
+python-multipart
+pytest
+httpx
