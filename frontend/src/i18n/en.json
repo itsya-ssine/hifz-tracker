@@ -1,0 +1,69 @@
+{
+  "app": {
+    "name": "Hifz Tracker",
+    "tagline": "1337 Quran memorization club"
+  },
+  "common": {
+    "loading": "Loading…",
+    "language": "Language",
+    "switchLanguage": "العربية",
+    "theme": "Toggle theme",
+    "logout": "Sign out",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "pageNotFound": "Page not found",
+    "backHome": "Back to home"
+  },
+  "roles": {
+    "STUDENT": "Student",
+    "ADMIN": "Admin"
+  },
+  "nav": {
+    "dashboard": "Dashboard"
+  },
+  "auth": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to follow your memorization journey.",
+    "login": "Username or email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…"
+  },
+  "changePassword": {
+    "title": "Change your password",
+    "forcedNotice": "For your security, please choose a new password before continuing.",
+    "subtitle": "Choose a strong password you don't use elsewhere.",
+    "current": "Current password",
+    "new": "New password",
+    "confirm": "Confirm new password",
+    "hint": "At least 8 characters.",
+    "tooShort": "The new password must be at least 8 characters long.",
+    "mismatch": "The passwords do not match.",
+    "submit": "Update password",
+    "submitting": "Updating…"
+  },
+  "student": {
+    "welcome": "Hello, {{name}}",
+    "subtitle": "Here is where your memorization stats will live.",
+    "emptyTitle": "Your progress will appear here",
+    "emptyBody": "Once your first session is recorded you will see your current hizb and part, your attendance and your history."
+  },
+  "admin": {
+    "welcome": "Hello, {{name}}",
+    "subtitle": "Club overview",
+    "emptyTitle": "Club activity will appear here",
+    "emptyBody": "Students, weekly sessions and attendance tools are coming in the next phases."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Could not reach the server. Check your connection.",
+    "INVALID_CREDENTIALS": "Incorrect username or password.",
+    "TOO_MANY_ATTEMPTS": "Too many failed attempts. Please try again in a few minutes.",
+    "NOT_AUTHENTICATED": "Please sign in to continue.",
+    "TOKEN_EXPIRED": "Your session has expired. Please sign in again.",
+    "WRONG_PASSWORD": "The current password is incorrect.",
+    "PASSWORD_UNCHANGED": "The new password must be different from the current one.",
+    "VALIDATION_ERROR": "Please check the form fields and try again.",
+    "FORBIDDEN": "You do not have access to this page."
+  }
+}

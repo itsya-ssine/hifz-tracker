@@ -22,3 +22,7 @@ dist/
 .idea/
 .vscode/
 *.log
+
+# Local dev databases
+*.db
+*.db-journal
