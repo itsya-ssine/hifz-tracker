@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import App from '../App'
+import { ToastProvider } from '../components/ToastProvider'
 import { AuthProvider } from '../features/auth/AuthProvider'
 import '../i18n'
 
@@ -9,13 +10,17 @@ export function renderApp(initialPath = '/') {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
   })
-  return render(
+  const router = createMemoryRouter([{ path: '*', element: <App /> }], {
+    initialEntries: [initialPath],
+  })
+  const view = render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[initialPath]}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </MemoryRouter>
+      <AuthProvider>
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
+      </AuthProvider>
     </QueryClientProvider>,
   )
+  return { ...view, router }
 }

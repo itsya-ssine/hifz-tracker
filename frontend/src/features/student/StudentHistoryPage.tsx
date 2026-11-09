@@ -1,24 +1,18 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ATTENDANCE_STATUSES, type AttendanceStatus, type HistoryRecord } from '../../api/student'
+import { ATTENDANCE_STATUSES, type AttendanceStatus } from '../../api/student'
 import { Pagination } from '../../components/Pagination'
 import { Skeleton } from '../../components/Skeleton'
-import { StatusBadge } from '../../components/StatusBadge'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent } from '../../components/ui/card'
 import { Label } from '../../components/ui/label'
-import { formatDate } from '../../lib/format'
+import { HistoryList } from '../progress/HistoryList'
 import { useHistory } from './queries'
 
 const PAGE_SIZE = 10
 
-function notesOf(record: HistoryRecord): string | null {
-  return [record.excuse_note, record.admin_note].filter(Boolean).join(' · ') || null
-}
-
 export function StudentHistoryPage() {
-  const { t, i18n } = useTranslation()
-  const lang = i18n.resolvedLanguage ?? 'en'
+  const { t } = useTranslation()
   const [page, setPage] = useState(1)
   const [status, setStatus] = useState<AttendanceStatus | ''>('')
   const query = useHistory(page, PAGE_SIZE, status || undefined)
@@ -79,54 +73,7 @@ export function StudentHistoryPage() {
 
       {data && data.items.length > 0 && (
         <>
-          {/* Table on larger screens */}
-          <Card className="hidden overflow-hidden md:block">
-            <table className="w-full text-sm">
-              <thead className="bg-muted/60 text-start text-muted-foreground">
-                <tr>
-                  {(['date', 'session', 'part', 'status', 'notes'] as const).map((column) => (
-                    <th key={column} scope="col" className="px-4 py-3 text-start font-medium">
-                      {t(`history.${column}`)}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {data.items.map((record) => (
-                  <tr key={record.id}>
-                    <td className="whitespace-nowrap px-4 py-3">{formatDate(record.session_date, lang)}</td>
-                    <td className="px-4 py-3">{record.title ?? '—'}</td>
-                    <td className="whitespace-nowrap px-4 py-3">
-                      {t('quran.position', { hizb: record.hizb, part: record.part })}
-                    </td>
-                    <td className="px-4 py-3">
-                      <StatusBadge status={record.status} />
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">{notesOf(record) ?? t('history.noNotes')}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Card>
-
-          {/* Cards on phones */}
-          <ul className="space-y-3 md:hidden">
-            {data.items.map((record) => (
-              <li key={record.id}>
-                <Card className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-medium">{formatDate(record.session_date, lang)}</p>
-                      {record.title && <p className="text-xs text-muted-foreground">{record.title}</p>}
-                    </div>
-                    <StatusBadge status={record.status} />
-                  </div>
-                  <p className="mt-3 text-sm">{t('quran.position', { hizb: record.hizb, part: record.part })}</p>
-                  {notesOf(record) && <p className="mt-1 text-sm text-muted-foreground">{notesOf(record)}</p>}
-                </Card>
-              </li>
-            ))}
-          </ul>
+          <HistoryList records={data.items} />
 
           <Pagination page={page} pageCount={pageCount} onChange={setPage} disabled={query.isFetching} />
         </>

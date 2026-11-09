@@ -59,6 +59,15 @@ Interactive docs: http://localhost:8000/docs (sign in with `POST /api/v1/auth/lo
 | Admin: sessions | `GET/POST /admin/sessions`, `GET/PATCH/DELETE /admin/sessions/{id}` |
 | Admin: attendance | `PUT /admin/sessions/{id}/attendance` (bulk, idempotent), `PATCH/DELETE /admin/attendance/{id}` |
 
+### Admin interface (sign in as `admin`)
+| Screen | What you can do |
+|--------|-----------------|
+| Dashboard | Student totals, the session that needs attention next, recent sessions |
+| Students | Search, filter by status or current hizb, sort, add a student (temporary password shown once) |
+| Student page | Progress, charts, history; edit profile, status, account; correct the current position; reset password; correct or delete individual records; read the audit trail |
+| Sessions | Create sessions, see results per session |
+| Attendance sheet | Mark each student (passed / not passed / absent / excused), add reasons and notes, bulk-mark the rest, save once; warns before leaving with unsaved changes |
+
 ### Business rules
 - Only `PASSED` moves a student forward; `NOT_PASSED`, `ABSENT` and `ABSENT_EXCUSED` keep them on the same part.
 - Progress is **derived** from `start_index` + passed sessions, so correcting an old record fixes every later one.
@@ -81,6 +90,6 @@ cd frontend && npm run lint && npm run build && npm test
 ## Roadmap
 1. ✅ Foundation: database, progress logic, auth, frontend skeleton, seed data
 2. ✅ Core domain: students and sessions API, bulk attendance, corrections + audit log, student dashboard and history
-3. Admin UI (students list and detail, sessions, attendance sheet)
-4. Analytics (club dashboard, at-risk students) and CSV import/export
+3. ✅ Admin UI: dashboard, students, student page with corrections and audit trail, sessions, attendance sheet
+4. Analytics (at-risk students, club-wide charts) and CSV import/export
 5. Polish and deployment
