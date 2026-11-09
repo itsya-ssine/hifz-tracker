@@ -48,6 +48,24 @@ Open http://localhost:5173. The dev server proxies `/api` to `http://localhost:8
 | Admin   | `admin`                   | `Admin1234!`   |
 | Student | `student01` … `student20` | `Student1234!` |
 
+## API overview
+Interactive docs: http://localhost:8000/docs (sign in with `POST /api/v1/auth/login` first; the cookie is reused by "Try it out").
+
+| Area | Endpoints (prefix `/api/v1`) |
+|------|------------------------------|
+| Auth | `POST /auth/login`, `/auth/logout`, `/auth/refresh`, `/auth/change-password`; `GET/PATCH /auth/me` |
+| Student | `GET /me/overview`, `/me/history`, `/me/progress-timeline` |
+| Admin: students | `GET/POST /admin/students`, `GET/PATCH /admin/students/{id}`, `POST .../reset-password`, `GET .../history`, `.../progress-timeline`, `.../audit` |
+| Admin: sessions | `GET/POST /admin/sessions`, `GET/PATCH/DELETE /admin/sessions/{id}` |
+| Admin: attendance | `PUT /admin/sessions/{id}/attendance` (bulk, idempotent), `PATCH/DELETE /admin/attendance/{id}` |
+
+### Business rules
+- Only `PASSED` moves a student forward; `NOT_PASSED`, `ABSENT` and `ABSENT_EXCUSED` keep them on the same part.
+- Progress is **derived** from `start_index` + passed sessions, so correcting an old record fixes every later one.
+- Every attendance, profile and position change is written to the audit log (old and new values).
+- A student is on a session's sheet if they are `ACTIVE` and had joined by that date (or already have a record there).
+- Admin-created accounts get a temporary password and must change it on first login.
+
 ## Tests
 ```bash
 cd backend  && pytest
@@ -62,8 +80,7 @@ cd frontend && npm run lint && npm run build && npm test
 
 ## Roadmap
 1. ✅ Foundation: database, progress logic, auth, frontend skeleton, seed data
-2. Core domain: students and sessions CRUD, bulk attendance, corrections + audit log
-3. Admin UI
-4. Student UI
-5. Analytics and CSV import/export
-6. Polish and deployment
+2. ✅ Core domain: students and sessions API, bulk attendance, corrections + audit log, student dashboard and history
+3. Admin UI (students list and detail, sessions, attendance sheet)
+4. Analytics (club dashboard, at-risk students) and CSV import/export
+5. Polish and deployment

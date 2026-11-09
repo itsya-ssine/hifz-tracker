@@ -1,4 +1,4 @@
-"""Fill the database with demo data: 1 admin, 20 students and 10 weekly sessions.
+"""Fill the database with demo data: 1 admin, 20 students, 10 past weekly sessions and 1 upcoming one.
 
 Usage (from backend/):  python -m scripts.seed_demo [--yes]
 
@@ -47,12 +47,20 @@ async def seed(db: Database, *, weeks: int = 10, rng_seed: int = 1337, today: da
     admin_hash = hash_password(ADMIN_PASSWORD)
     student_hash = hash_password(STUDENT_PASSWORD)  # one hash shared by all demo students (fast)
 
-    admin_id = None
-    if not await users.get_for_login(db, "admin"):
+    existing_admin = await users.get_for_login(db, "admin")
+    if existing_admin:
+        admin_id = existing_admin["id"]
+    else:
         admin_id = await users.create(
             db, login="admin", full_name="Club Admin", email="admin@example.com",
             password_hash=admin_hash, role="ADMIN",
         )
+
+    # One upcoming session (no records yet) so "next session" has something to show.
+    await db.execute(
+        "INSERT INTO sessions (session_date, title, created_by) VALUES (?, ?, ?)",
+        [(today + timedelta(days=3)).isoformat(), "Upcoming session", admin_id],
+    )
 
     session_ids = []
     for d in session_dates:

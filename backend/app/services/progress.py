@@ -108,6 +108,30 @@ def recompute_all_statement() -> Statement:
     return _RECOMPUTE_SET
 
 
+# A record's ``part_index`` is the part the student was evaluated on in that session:
+#   start_index + number of PASSED records in *earlier* sessions (capped to 1..480).
+# It is derived, so correcting an old record automatically shifts every later one.
+_PART_INDEX_SET = f"""
+UPDATE attendance_records SET part_index = MIN({TOTAL_PARTS}, MAX(1,
+  (SELECT start_index FROM students WHERE id = attendance_records.student_id)
+  + (SELECT COUNT(*) FROM attendance_records p
+       JOIN sessions ps ON ps.id = p.session_id
+      WHERE p.student_id = attendance_records.student_id
+        AND p.status = 'PASSED'
+        AND ps.session_date < (SELECT session_date FROM sessions
+                                WHERE id = attendance_records.session_id))))
+"""
+
+
+def recompute_part_indexes_statement(student_id: int) -> Statement:
+    return (_PART_INDEX_SET + " WHERE student_id = ?", [student_id])
+
+
+def recompute_student_statements(student_id: int) -> list[Statement]:
+    """Everything that must be refreshed after a student's attendance (or start) changed."""
+    return [recompute_part_indexes_statement(student_id), recompute_statement(student_id)]
+
+
 async def recompute_student_progress(db: Database, student_id: int) -> int:
     """Recompute and return the student's ``current_index``."""
     await db.batch([recompute_statement(student_id)])

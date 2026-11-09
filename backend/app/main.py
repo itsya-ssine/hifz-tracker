@@ -7,7 +7,7 @@ from app.core.config import get_settings
 from app.core.db import Database
 from app.core.errors import register_exception_handlers
 from app.core.rate_limit import LoginRateLimiter
-from app.routers import auth
+from app.routers import admin_sessions, admin_students, auth, me
 
 
 @asynccontextmanager
@@ -39,5 +39,8 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(auth.router, prefix="/api/v1")
+    app.include_router(me.router, prefix="/api/v1")
+    app.include_router(admin_students.router, prefix="/api/v1")
+    app.include_router(admin_sessions.router, prefix="/api/v1")
     return app
 

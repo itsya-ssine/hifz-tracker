@@ -57,7 +57,8 @@ describe('authentication flow', () => {
     renderApp('/')
 
     expect(await screen.findByText('Hello, Youssef El Amrani')).toBeInTheDocument()
-    expect(calls).toEqual(['GET /auth/me', 'POST /auth/refresh', 'GET /auth/me'])
+    // The expired session is refreshed silently, then the page loads normally.
+    expect(calls.slice(0, 3)).toEqual(['GET /auth/me', 'POST /auth/refresh', 'GET /auth/me'])
   })
 
   it('logs out and returns to the login page', async () => {
