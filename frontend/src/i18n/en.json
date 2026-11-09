@@ -15,7 +15,19 @@
     "backHome": "Back to home",
     "retry": "Try again",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "close": "Close",
+    "cancel": "Cancel",
+    "copy": "Copy",
+    "copied": "Copied",
+    "save": "Save",
+    "saving": "Saving…",
+    "search": "Search",
+    "all": "All",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "none": "—"
   },
   "roles": {
     "STUDENT": "Student",
@@ -23,7 +35,9 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "history": "History"
+    "history": "History",
+    "students": "Students",
+    "sessions": "Sessions"
   },
   "auth": {
     "title": "Welcome back",
@@ -62,8 +76,18 @@
   "admin": {
     "welcome": "Hello, {{name}}",
     "subtitle": "Club overview",
-    "emptyTitle": "Club activity will appear here",
-    "emptyBody": "Students, weekly sessions and attendance tools are coming in the next phases."
+    "manageStudents": "Manage students",
+    "stats": {
+      "students": "Students",
+      "active": "Active",
+      "completed": "Completed the Quran"
+    },
+    "nextSession": "Next session",
+    "needsAttendance": "Attendance still to record",
+    "openSheet": "Open attendance sheet",
+    "noSessionToTake": "No session needs attendance right now. Create the next weekly session when you are ready.",
+    "recentSessions": "Recent sessions",
+    "viewAll": "View all"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -75,7 +99,19 @@
     "WRONG_PASSWORD": "The current password is incorrect.",
     "PASSWORD_UNCHANGED": "The new password must be different from the current one.",
     "VALIDATION_ERROR": "Please check the form fields and try again.",
-    "FORBIDDEN": "You do not have access to this page."
+    "FORBIDDEN": "You do not have access to this page.",
+    "LOGIN_TAKEN": "This login is already used by another account.",
+    "EMAIL_TAKEN": "This email is already used by another account.",
+    "STUDENT_NOT_FOUND": "Student not found.",
+    "SESSION_NOT_FOUND": "Session not found.",
+    "RECORD_NOT_FOUND": "Attendance record not found.",
+    "SESSION_DATE_TAKEN": "A session already exists on this date.",
+    "SESSION_HAS_RECORDS": "This session already has attendance records, so it cannot be moved, cancelled or deleted.",
+    "SESSION_CANCELLED": "This session was cancelled.",
+    "STUDENT_NOT_ELIGIBLE": "Some students are not on this session's sheet. Reload the page and try again.",
+    "INVALID_POSITION": "That position is behind the passes already recorded. Correct the attendance records instead.",
+    "STUDENT_COMPLETED": "This student has completed the Quran, so their status cannot be changed.",
+    "PASSWORD_CHANGE_REQUIRED": "You must change your password first."
   },
   "quran": {
     "position": "Hizb {{hizb}} · Part {{part}}",
@@ -125,6 +161,224 @@
     "emptyFiltered": "No sessions match this filter.",
     "page": "Page {{page}} of {{pages}}",
     "loadFailed": "Could not load your history.",
-    "noNotes": "—"
+    "noNotes": "—",
+    "actions": "Actions"
+  },
+  "adminStudent": {
+    "currentLabel": "Currently memorizing",
+    "completedTitle": "Completed the whole Quran",
+    "gained": "Parts passed since joining: {{count}}"
+  },
+  "studentStatus": {
+    "ACTIVE": "Active",
+    "PAUSED": "Paused",
+    "COMPLETED": "Completed",
+    "LEFT": "Left the club"
+  },
+  "students": {
+    "title": "Students",
+    "subtitle": "Everyone in the club and how they are progressing.",
+    "add": "Add student",
+    "searchPlaceholder": "Search by name or login",
+    "statusFilter": "Status",
+    "hizbFilter": "Current hizb",
+    "sortBy": "Sort by",
+    "sort": {
+      "name": "Name",
+      "position": "Position",
+      "attendance": "Attendance",
+      "joined": "Join date"
+    },
+    "order": {
+      "asc": "Ascending (click to reverse)",
+      "desc": "Descending (click to reverse)"
+    },
+    "total": "Total: {{count}}",
+    "columns": {
+      "student": "Student",
+      "position": "Current position",
+      "progress": "Progress",
+      "attendance": "Attendance",
+      "lastSession": "Last session",
+      "status": "Status"
+    },
+    "empty": "No students yet. Add your first student to get started.",
+    "emptyFiltered": "No students match your filters.",
+    "disabled": "account disabled",
+    "loadFailed": "Could not load the students.",
+    "finished": "Finished the Quran"
+  },
+  "studentForm": {
+    "title": "Add a student",
+    "description": "They get a temporary password and must change it the first time they sign in.",
+    "login": "Login",
+    "loginHint": "Letters, digits, dots, dashes or underscores.",
+    "fullName": "Full name",
+    "email": "Email (optional)",
+    "password": "Password (optional)",
+    "passwordHint": "Leave empty to generate a temporary password.",
+    "startPosition": "Starting position",
+    "startPositionHint": "The part they begin memorizing from.",
+    "language": "Language",
+    "joinedAt": "Joined on",
+    "joinedAtHint": "Sessions before this date will not list the student.",
+    "notes": "Notes (optional)",
+    "submit": "Create student",
+    "createdTitle": "Student created",
+    "createdBody": "Share these details with {{name}}. The temporary password is shown only once.",
+    "createdBodyChosen": "The account for {{name}} was created with the password you chose.",
+    "temporaryPassword": "Temporary password",
+    "errors": {
+      "loginInvalid": "Use 3 to 32 letters, digits, dots, dashes or underscores.",
+      "nameRequired": "Enter the student's full name.",
+      "emailInvalid": "Enter a valid email address.",
+      "passwordShort": "The password must be at least 8 characters long."
+    }
+  },
+  "studentDetail": {
+    "back": "Back to students",
+    "resetPassword": "Reset password",
+    "resetTitle": "Reset password?",
+    "resetBody": "{{name}}'s current password stops working and they must choose a new one the next time they sign in.",
+    "resetConfirm": "Reset password",
+    "resetDoneTitle": "New temporary password",
+    "resetDoneBody": "Share it with {{name}}. It is shown only once.",
+    "historyTitle": "Session history",
+    "auditTitle": "Change history",
+    "auditEmpty": "No changes recorded yet.",
+    "loadFailed": "Could not load this student.",
+    "notFound": "This student does not exist.",
+    "profile": {
+      "title": "Profile",
+      "account": "Account",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "noNotes": "No notes"
+    },
+    "toasts": {
+      "updated": "Student updated",
+      "recordUpdated": "Attendance record updated",
+      "recordDeleted": "Attendance record deleted"
+    }
+  },
+  "editStudent": {
+    "title": "Edit student",
+    "status": "Status",
+    "statusLocked": "A student who completed the Quran keeps this status.",
+    "account": "Account",
+    "accountEnabled": "Account enabled",
+    "accountEnabledHint": "Disabled accounts cannot sign in.",
+    "correctPosition": "Correct current position",
+    "correctPositionHint": "Use this when the student is on the wrong part. It moves the starting point; recorded sessions are not changed.",
+    "submit": "Save changes"
+  },
+  "record": {
+    "editTitle": "Correct attendance record",
+    "editDescription": "Session of {{date}}",
+    "excuseNote": "Reason for the absence",
+    "adminNote": "Note",
+    "ripple": "Changing a result recalculates the student's progress and the part shown on their later sessions.",
+    "submit": "Save correction",
+    "deleteTitle": "Delete this record?",
+    "deleteBody": "The session of {{date}} is removed from the student's history and their progress is recalculated.",
+    "editAria": "Edit the record of {{date}}",
+    "deleteAria": "Delete the record of {{date}}"
+  },
+  "audit": {
+    "system": "System",
+    "attendanceCreated": "Marked {{status}} for the session of {{date}}",
+    "attendanceUpdated": "Changed the session of {{date}} from {{from}} to {{to}}",
+    "attendanceDeleted": "Removed the {{status}} record of {{date}}",
+    "studentCreated": "Student account created",
+    "passwordReset": "Password reset",
+    "studentUpdated": "Profile updated — {{changes}}",
+    "fields": {
+      "full_name": "Name",
+      "email": "Email",
+      "preferred_lang": "Language",
+      "is_active": "Account",
+      "notes": "Notes",
+      "status": "Status",
+      "position": "Position",
+      "joined_at": "Join date"
+    }
+  },
+  "sessions": {
+    "title": "Sessions",
+    "subtitle": "Weekly sessions and who attended.",
+    "add": "New session",
+    "columns": {
+      "date": "Date",
+      "session": "Session",
+      "state": "State",
+      "results": "Results"
+    },
+    "state": {
+      "cancelled": "Cancelled",
+      "upcoming": "Upcoming",
+      "today": "Today",
+      "past": "Past"
+    },
+    "noRecords": "No attendance recorded yet",
+    "open": "Attendance",
+    "openAria": "Open the attendance sheet of {{date}}",
+    "empty": "No sessions yet. Create the first one to start taking attendance.",
+    "loadFailed": "Could not load the sessions."
+  },
+  "sessionForm": {
+    "title": "New session",
+    "description": "Pick the date of the weekly session.",
+    "date": "Date",
+    "titleLabel": "Title (optional)",
+    "notes": "Notes (optional)",
+    "submit": "Create session",
+    "dateRequired": "Choose a date."
+  },
+  "sessionSettings": {
+    "title": "Session settings",
+    "description": "Change the details of this session.",
+    "dateLocked": "Sessions with attendance records cannot be moved.",
+    "cancel": "Cancel this session",
+    "cancelHint": "Cancelled sessions do not accept attendance.",
+    "cancelLocked": "Sessions with attendance records cannot be cancelled.",
+    "deleteTitle": "Delete session",
+    "deleteHint": "Only sessions without attendance can be deleted.",
+    "deleteLocked": "Sessions with attendance records cannot be deleted.",
+    "delete": "Delete session",
+    "confirmDeleteTitle": "Delete this session?",
+    "confirmDeleteBody": "The session is removed permanently.",
+    "saved": "Session updated",
+    "deleted": "Session deleted"
+  },
+  "sheet": {
+    "back": "Back to sessions",
+    "settings": "Settings",
+    "notFound": "This session does not exist.",
+    "loadFailed": "Could not load this session.",
+    "cancelledBanner": "This session was cancelled, so attendance cannot be recorded.",
+    "summary": "Attendance summary",
+    "unmarked": "Unmarked",
+    "marked": "Marked",
+    "searchPlaceholder": "Search students",
+    "show": "Show",
+    "bulkLabel": "Mark the unmarked students shown as…",
+    "bulkPlaceholder": "Choose a result…",
+    "partToEvaluate": "Part to evaluate",
+    "resultFor": "Result for {{name}}",
+    "excuseReason": "Reason for the absence",
+    "addNote": "Add a note",
+    "note": "Note",
+    "notePlaceholder": "Note for this student (optional)",
+    "clearMark": "Clear",
+    "empty": "No students are on this session's sheet yet. Add students first.",
+    "emptyFiltered": "No students match your search.",
+    "unsaved": "Unsaved changes: {{count}}",
+    "allSaved": "All changes saved",
+    "discard": "Discard changes",
+    "save": "Save attendance",
+    "saved": "Attendance saved: {{created}} new, {{updated}} updated",
+    "leaveTitle": "Leave without saving?",
+    "leaveBody": "You have unsaved attendance changes ({{count}}). They will be lost.",
+    "leaveConfirm": "Leave"
   }
 }

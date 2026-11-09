@@ -1,6 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
 import { AppShell } from './components/layout/AppShell'
 import { AdminDashboard } from './features/admin/AdminDashboard'
+import { SessionSheetPage } from './features/admin/sessions/SessionSheetPage'
+import { SessionsPage } from './features/admin/sessions/SessionsPage'
+import { StudentDetailPage } from './features/admin/students/StudentDetailPage'
+import { StudentsPage } from './features/admin/students/StudentsPage'
 import { ChangePasswordPage } from './features/auth/ChangePasswordPage'
 import { LoginPage } from './features/auth/LoginPage'
 import { StudentDashboard } from './features/student/StudentDashboard'
@@ -24,6 +28,10 @@ export default function App() {
           </Route>
           <Route element={<RequireRole role="ADMIN" />}>
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/students" element={<StudentsPage />} />
+            <Route path="/admin/students/:id" element={<StudentDetailPage />} />
+            <Route path="/admin/sessions" element={<SessionsPage />} />
+            <Route path="/admin/sessions/:id" element={<SessionSheetPage />} />
           </Route>
         </Route>
       </Route>

@@ -21,7 +21,11 @@ export function AppShell() {
           { to: home, label: 'nav.dashboard' },
           { to: '/student/history', label: 'nav.history' },
         ]
-      : [{ to: home, label: 'nav.dashboard' }]
+      : [
+          { to: home, label: 'nav.dashboard' },
+          { to: '/admin/students', label: 'nav.students' },
+          { to: '/admin/sessions', label: 'nav.sessions' },
+        ]
 
   return (
     <div className="min-h-dvh">
@@ -37,7 +41,7 @@ export function AppShell() {
               <NavLink
                 key={item.to}
                 to={item.to}
-                end
+                end={item.to === home}
                 className={({ isActive }) =>
                   `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                     isActive ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
