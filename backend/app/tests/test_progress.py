@@ -179,3 +179,52 @@ async def test_recompute_all_only_touches_derived_values(db: Database):
 async def test_recompute_unknown_student_raises(db: Database):
     with pytest.raises(LookupError):
         await p.recompute_student_progress(db, 999)
+
+
+# --- derived part_index -------------------------------------------------------
+
+
+async def test_part_index_follows_passes_in_date_order_and_shifts_on_correction(db: Database):
+    student = await _make_student(db, "frank", start_index=10)
+    s1 = await _make_session(db, "2026-01-01")
+    s2 = await _make_session(db, "2026-01-08")
+    s3 = await _make_session(db, "2026-01-15")
+    r1 = await _mark(db, s1, student, "PASSED")
+    await _mark(db, s2, student, "PASSED")
+    await _mark(db, s3, student, "NOT_PASSED")
+
+    await db.batch(p.recompute_student_statements(student))
+    rows = await db.fetch_all(
+        "SELECT status, part_index FROM attendance_records WHERE student_id = ? ORDER BY id", [student]
+    )
+    assert [r["part_index"] for r in rows] == [10, 11, 12]
+    assert await db.fetch_value("SELECT current_index FROM students WHERE id = ?", [student]) == 12
+
+    # The first pass was a mistake: every later record shifts back by one.
+    await db.batch(
+        [("UPDATE attendance_records SET status = 'NOT_PASSED' WHERE id = ?", [r1]),
+         *p.recompute_student_statements(student)]
+    )
+    rows = await db.fetch_all(
+        "SELECT part_index FROM attendance_records WHERE student_id = ? ORDER BY id", [student]
+    )
+    assert [r["part_index"] for r in rows] == [10, 10, 11]
+    assert await db.fetch_value("SELECT current_index FROM students WHERE id = ?", [student]) == 11
+
+
+async def test_part_index_is_independent_per_student_and_capped(db: Database):
+    a = await _make_student(db, "gina", start_index=p.TOTAL_PARTS)
+    b = await _make_student(db, "hugo", start_index=5)
+    s1 = await _make_session(db, "2026-01-01")
+    s2 = await _make_session(db, "2026-01-08")
+    await _mark(db, s1, a, "PASSED")
+    await _mark(db, s2, a, "PASSED")  # nonsensical (already completed) but must not break the CHECK
+    await _mark(db, s1, b, "PASSED")
+
+    await db.batch([*p.recompute_student_statements(a), *p.recompute_student_statements(b)])
+    assert await db.fetch_value(
+        "SELECT MAX(part_index) FROM attendance_records WHERE student_id = ?", [a]
+    ) == p.TOTAL_PARTS
+    assert await db.fetch_value(
+        "SELECT part_index FROM attendance_records WHERE student_id = ?", [b]
+    ) == 5

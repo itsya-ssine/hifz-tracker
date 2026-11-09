@@ -12,14 +12,18 @@
     "showPassword": "Show password",
     "hidePassword": "Hide password",
     "pageNotFound": "Page not found",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "retry": "Try again",
+    "previous": "Previous",
+    "next": "Next"
   },
   "roles": {
     "STUDENT": "Student",
     "ADMIN": "Admin"
   },
   "nav": {
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "history": "History"
   },
   "auth": {
     "title": "Welcome back",
@@ -44,9 +48,16 @@
   },
   "student": {
     "welcome": "Hello, {{name}}",
-    "subtitle": "Here is where your memorization stats will live.",
-    "emptyTitle": "Your progress will appear here",
-    "emptyBody": "Once your first session is recorded you will see your current hizb and part, your attendance and your history."
+    "subtitle": "Here is how your memorization is going.",
+    "currentLabel": "Currently memorizing",
+    "partsProgress": "{{done}} of {{total}} parts memorized",
+    "gained": "Parts passed since you joined: {{count}}",
+    "completedTitle": "Alhamdulillah, you completed the whole Quran!",
+    "completedBody": "May Allah accept it from you and keep it in your heart.",
+    "emptyTitle": "Your first session is coming up",
+    "emptyBody": "After your first session is recorded you will see your attendance, streak and history here.",
+    "loadFailed": "Could not load your progress.",
+    "viewHistory": "View full history"
   },
   "admin": {
     "welcome": "Hello, {{name}}",
@@ -65,5 +76,55 @@
     "PASSWORD_UNCHANGED": "The new password must be different from the current one.",
     "VALIDATION_ERROR": "Please check the form fields and try again.",
     "FORBIDDEN": "You do not have access to this page."
+  },
+  "quran": {
+    "position": "Hizb {{hizb}} · Part {{part}}",
+    "hizb": "Hizb",
+    "part": "Part"
+  },
+  "status": {
+    "PASSED": "Passed",
+    "NOT_PASSED": "Not passed",
+    "ABSENT": "Absent",
+    "ABSENT_EXCUSED": "Excused absence",
+    "all": "All statuses"
+  },
+  "stats": {
+    "attendanceRate": "Attendance rate",
+    "attendanceHint": "Excluding excused absences: {{rate}}",
+    "passedSessions": "Passed sessions",
+    "passedHint": "{{passed}} of {{total}} sessions",
+    "streak": "Current streak",
+    "streakHint": "Passed sessions in a row",
+    "nextSession": "Next session",
+    "noNextSession": "No session scheduled yet"
+  },
+  "map": {
+    "title": "Your Quran map",
+    "done": "Memorized",
+    "current": "Current",
+    "todo": "Upcoming",
+    "tile": "Hizb {{hizb}}: {{done}} of 8 parts memorized"
+  },
+  "charts": {
+    "progressTitle": "Progress over time",
+    "progressSeries": "Parts memorized",
+    "statusTitle": "Sessions by status",
+    "noData": "Charts will appear after your first session."
+  },
+  "history": {
+    "title": "Session history",
+    "subtitle": "Every session you attended or missed.",
+    "filter": "Filter by status",
+    "date": "Date",
+    "session": "Session",
+    "part": "Part",
+    "status": "Status",
+    "notes": "Notes",
+    "empty": "No sessions recorded yet.",
+    "emptyFiltered": "No sessions match this filter.",
+    "page": "Page {{page}} of {{pages}}",
+    "loadFailed": "Could not load your history.",
+    "noNotes": "—"
   }
 }

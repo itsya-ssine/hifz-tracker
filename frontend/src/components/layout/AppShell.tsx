@@ -14,6 +14,15 @@ export function AppShell() {
 
   if (!user) return null
 
+  const home = homePathFor(user.role)
+  const navItems =
+    user.role === 'STUDENT'
+      ? [
+          { to: home, label: 'nav.dashboard' },
+          { to: '/student/history', label: 'nav.history' },
+        ]
+      : [{ to: home, label: 'nav.dashboard' }]
+
   return (
     <div className="min-h-dvh">
       <header className="sticky top-0 z-10 border-b border-border bg-card/80 backdrop-blur">
@@ -24,16 +33,20 @@ export function AppShell() {
           </NavLink>
 
           <nav className="ms-2 flex items-center gap-1" aria-label="Main">
-            <NavLink
-              to={homePathFor(user.role)}
-              className={({ isActive }) =>
-                `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
-                }`
-              }
-            >
-              {t('nav.dashboard')}
-            </NavLink>
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end
+                className={({ isActive }) =>
+                  `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  }`
+                }
+              >
+                {t(item.label)}
+              </NavLink>
+            ))}
           </nav>
 
           <div className="ms-auto flex items-center gap-1">
